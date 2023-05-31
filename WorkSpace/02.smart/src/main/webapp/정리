@@ -1,0 +1,49 @@
+1. 주소창에 url 요청
+2. 해당 uri 가 mapping된 메소드가 실행됨 - 해당메소드는 Controller에 선언
+   : @RequestMapping("요청uri")
+3. 해당 메소드에서의 처리
+   - 비지니스로직 처리 
+     :화면에 출력할 정보가 있다면 Model 객체에 addAttribute로 담는다
+   - 응답화면 지정 : return "화면페이지명"
+4. 응답화면에서의 처리
+   Model객체에 담겨진 정보를 출력: EL, JSTL 사용
+
+
+
+화면연결형태
+1. Model객체를 사용하는 방법
+   메소드의 파라미터로 Model객체 변수를 선언
+   -> 해당 변수에 addAttribute로 데이터를 담는다
+   -> return "응답화면명"
+2. ModelAndView 객체를 사용하는 방법
+   ModelAndView 객체 생성
+   -> addObject 로 데이터를 담는다
+   -> setViewName("응답화면명")
+   -> return ModelAndView 객체
+
+
+전송된 파라미터데이터 접근 방법
+1. HttpServletRequest 사용
+2. @RequestParam 사용
+3. 데이터객체
+
+경로 접근 방법: @PathVarible 사용
+
+
+응답화면연결형태 
+1. forward방식 - 요청uri가 그대로 유지됨
+2. redirect방식 - 요청uri가 바뀜
+
+
+
+
+
+
+
+
+
+
+
+   
+   
+   

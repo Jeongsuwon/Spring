@@ -13,5 +13,13 @@
 	<div>성명: ${name }</div>
 	<div>성별: ${gender }</div>
 	<div>이메일: ${email }</div>
+	<div>나이: ${age }</div>
+	<hr>
+	<div>성명: ${vo.name }</div>
+	<div>성별: ${vo.gender }</div>
+	<div>이메일: ${vo.email }</div>
+	<div>나이: ${vo.age }</div>
+	
+	
 </body>
 </html>

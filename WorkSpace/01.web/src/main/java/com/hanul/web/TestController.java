@@ -7,12 +7,44 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import customer.CustomerVO;
 
 @Controller
 public class TestController {
 	
+	
+	@RequestMapping("/joinPath/{name}/{gender}/{mail}/{age}")
+	public String join(@PathVariable String name, @PathVariable String gender, Model model, @PathVariable("mail") String email, @PathVariable int age) {
+		model.addAttribute("name", name);
+		model.addAttribute("gender", gender);
+		model.addAttribute("email", email);
+		model.addAttribute("age", age);
+		model.addAttribute("method", "@PathVariable");
+		return "member/info";
+	}
+	
+	@RequestMapping("/joinDataObject")
+	public String join(CustomerVO vo, Model model) {
+		model.addAttribute("vo", vo);
+		
+		return "member/info";
+	}
+	
+	@RequestMapping("/joinParam")
+	public String join(@RequestParam String name, @RequestParam("gender")String g, String email, int age, Model model) { // @RequestParam("name") 다른 변수로 치환 가능
+		model.addAttribute("method", "@RequestParam");
+		model.addAttribute("name", name);
+		model.addAttribute("gender", g);
+		model.addAttribute("email", email);
+		model.addAttribute("age", age);
+		
+		return "member/info";
+	}
 	
 	@RequestMapping("/joinRequest")
 	public String join(HttpServletRequest request, Model model) {
@@ -20,7 +52,9 @@ public class TestController {
 		String name = request.getParameter("name"); //주소로 전달된 파라미터는 무조건 String
 		model.addAttribute("gender", request.getParameter("gender"));
 		model.addAttribute("email", request.getParameter("email"));
-		
+		//String -> int, int <-> Integer
+		int age = Integer.valueOf(request.getParameter("age"));
+		model.addAttribute("age", age);
 		//파라미터 값을 정보화면에 출력할 수 있도록 Model에 담기 
 		model.addAttribute("name", name);
 		model.addAttribute("method", "HttpServletRequest 방식");

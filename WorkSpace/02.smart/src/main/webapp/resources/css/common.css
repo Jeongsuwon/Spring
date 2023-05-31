@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+a{color:initial}
+
+a:link, a:hover{ text-decoration: none;
+		color: inherit;
+}
