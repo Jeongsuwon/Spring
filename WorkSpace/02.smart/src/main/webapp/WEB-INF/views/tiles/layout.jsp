@@ -1,14 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
 <!DOCTYPE html>
 <html lang="ko">
+<c:choose>
+	<c:when test="${category eq 'cu' }"><c:set var="title" value="고객관리"/> </c:when>
+	<c:when test="${category eq 'hr' }"><c:set var="title" value="사원관리"/> </c:when>
+	<c:when test="${category eq 'no' }"><c:set var="title" value="공지사항"/> </c:when>
+	<c:when test="${category eq 'bo' }"><c:set var="title" value="방명록"/> </c:when>
+	<c:when test="${category eq 'da' }"><c:set var="title" value="공공데이터"/> </c:when>
+	<c:when test="${category eq 'vi' }"><c:set var="title" value="시각화"/> </c:when>
+</c:choose>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>스마트웹&amp;앱</title>
+        <title>스마트웹&amp;앱 ${title}</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="img/hanul.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -26,12 +36,12 @@
                 </a>
                 </div>
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="list.cu">고객관리</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">사원관리</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">공지사항</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">방명록</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">공공데이터</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">시각화</a>
+                    <a class="${category eq 'cu' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="list.cu">고객관리</a>
+                    <a class="${category eq 'hr' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">사원관리</a>
+                    <a class="${category eq 'no' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">공지사항</a>
+                    <a class="${category eq 'bo' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">방명록</a>
+                    <a class="${category eq 'da' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">공공데이터</a>
+                    <a class="${category eq 'vi' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">시각화</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -61,6 +71,9 @@
                 <div class="container-fluid">
                     <tiles:insertAttribute name="container"/>
                 </div>
+                <footer class="border-top py-4 mt-4 text-center">
+                	<div>Copyright &copy; My Website 2023</div>
+                </footer>
             </div>
         </div>
         <!-- Bootstrap core JS-->

@@ -635,8 +635,8 @@ progress {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  padding-right: calc(var(--bs-gutter-x) * 1.5);
+  padding-left: calc(var(--bs-gutter-x) * 1.5);
   margin-right: auto;
   margin-left: auto;
 }
@@ -5113,7 +5113,7 @@ textarea.form-control-lg {
 }
 .list-group-item-light.list-group-item-action.active {
   color: #fff;
-  background-color: #636464;
+  background-color:var(--bs-blue);  /*#636464;*/
   border-color: #636464;
 }
 
