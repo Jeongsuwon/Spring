@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 	// 자동 주입 : @Autowired
 public class CustomerDAO implements CustomerService {
 	
-	private SqlSession sql;
+	@Autowired private SqlSession sql;
 	
 	
 	// 생성된 객체(bean으로 등록된 객체들)의 주소를 스프링 container에 관리가 됨
@@ -22,9 +22,9 @@ public class CustomerDAO implements CustomerService {
 	
 	// 필드에 데이터 담는 방법 2가지
 	//(1) 생성자
-	public CustomerDAO(SqlSession sql) {
-		this.sql = sql;
-	}
+//	public CustomerDAO(SqlSession sql) {
+//		this.sql = sql;
+//	}
 	
 	@Override
 	public void customer_insert(CustomerVO vo) {
@@ -35,7 +35,7 @@ public class CustomerDAO implements CustomerService {
 	@Override
 	public List<CustomerVO> customer_list() {
 		// TODO Auto-generated method stub
-		return null;
+		return sql.selectList("customer.list");
 	}
 
 	@Override

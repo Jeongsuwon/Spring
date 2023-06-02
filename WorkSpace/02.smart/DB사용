@@ -1,0 +1,88 @@
+생성한 프로젝트 > 우클릭 : build path > configure build path
+> 좌측메뉴: Project Facets > Java Version, Dynamic Web module Version 변경
+
+
+다운받을 라이브러리 : mvnrepository.com
+DB사용을 위해 필요한 라이브러리
+1. 어떤 DB를 사용하는지에 따라: mysql, oracle, ...
+   오라클용 ojdbc 
+<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
+<dependency>
+    <groupId>com.oracle.database.jdbc</groupId>
+    <artifactId>ojdbc8</artifactId>
+    <version>21.5.0.0</version>
+</dependency>
+   
+2. 스프링에서 DB를 사용할 수 있도록 지원할 라이브러리: spring-jdbc
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-jdbc</artifactId>
+    <version>5.3.24</version>
+</dependency>
+
+3. DB연결객체를 미리 준비해두고 가져다 사용하도록 지원할 라이브러리 : dbcp
+<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-dbcp2</artifactId>
+    <version>2.9.0</version>
+</dependency>
+
+
+
+Mybatis 사용을 위해 필요한 라이브러리
+1. mybatis  라이브러리
+<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+<dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis</artifactId>
+    <version>3.5.11</version>
+</dependency>
+
+2. spring framework에서 mybatis 를 사용할 수 있도록 지원할 라이브러리 : mybatis-spring
+ <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+<dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis-spring</artifactId>
+    <version>2.0.6</version>
+</dependency>
+
+
+DB 연결객체(DBCP) 생성
+1. org.apache.commons.dbcp2.BasicDataSource 클래스를 빈으로 등록
+   - driverClassName
+   - url
+   - username
+   - password
+
+Mybatis 사용을 위한 객체 생성
+1. SqlSessionFactoryBean(SqlSession 을 만들어주는 기능을 가진 객체) - 자바: SqlSessionFactoryBuilder
+   - dataSource : DB연결객체 주소 참조
+   - mapperLocation : 쿼리문을 선언할 mapper 파일의 위치
+2. SqlSessionTemplate(SqlSession를 구현하고 있는 객체) 
+   - sqlSessionFactory(생성자로 필드에 주입) 
+   
+
+위에서 선언한 파일의 객체를 사용할 수 있도록 지정
+: root-context.xml 에 configuration 파일을 resource로 import 
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   

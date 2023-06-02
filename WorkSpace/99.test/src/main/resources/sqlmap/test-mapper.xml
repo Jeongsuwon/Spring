@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://blog.mybatis.org/search?q=mapper 또는 mybatis.org 사이트에서 mapper 검색-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="test">
+<select id="today" resultType="String">
+	select to_char(sysdate,'yyyy-MM-dd') from dual 
+</select>
+</mapper>

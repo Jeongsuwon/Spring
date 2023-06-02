@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<bean id="dbcp" class="org.apache.commons.dbcp2.BasicDataSource">
+	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+	<property name="username" value="hanul"></property>
+	<property name="password" value="0000"></property>
+</bean>	
+	
+	<bean id="factory" class="org.mybatis.spring.SqlSessionFactoryBean"> <!-- SqlSession을 만들어주는 기능을 가진 객체 -->
+			<property name="dataSource" ref="dbcp"></property> <!-- DB연결객체 주소 참조 -->
+			<property name="mapperLocations" value="classpath:sqlmap/*.xml"></property> <!-- 쿼리문을 선언할 mapper 파일의 위치 -->
+				
+	</bean>
+	
+	<bean class="org.mybatis.spring.SqlSessionTemplate"><!-- SqlSession을 구현하고 있는 객체 -->
+			<constructor-arg name="sqlSessionFactory" ref="factory"></constructor-arg> <!-- sqlSessionFactory(생성자로 필드 주입) -->
+	</bean>
+	
+	<!-- 위에서 선언한 파일의 객체를 사용할 수 있도록 지정 -> root-context.xml  -->
+</beans>
