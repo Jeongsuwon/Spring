@@ -15,10 +15,10 @@
 	</bean>
 	 -->
 	 <bean id="dbcp" class="org.apache.commons.dbcp2.BasicDataSource">
-<!--<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
-	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-<!-- <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>  -->	
-	<property name="url" value="jdbc:log4jdbcjdbc:oracle:thin:@localhost:1521:xe"></property>
+<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+<!-- 	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property> -->
+<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property> 	
+	<!-- <property name="url" value="jdbc:log4jdbcjdbc:oracle:thin:@localhost:1521:xe"></property> -->
 	<property name="username" value="hanul"></property>
 	<property name="password" value="0000"></property>
 </bean>	
