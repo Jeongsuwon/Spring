@@ -15,7 +15,7 @@ where id = #{id}
 </update>
 
 <!-- 고객정보조회 -->
-<select id="info" resultType="customer.CustomerVO">
+<select id="info" resultType="smart.customer.CustomerVO">
 select * from customer where id = #{id}
 </select>
 
@@ -26,7 +26,7 @@ values (#{name}, #{gender}, #{email}, #{phone})
 </insert>
 
 <!-- 고객목록조회 -->
-<select id="list" resultType="customer.CustomerVO">
+<select id="list" resultType="smart.customer.CustomerVO">
 select * from customer 
 <if test="name != null">
 where name like '%' || #{name} || '%'

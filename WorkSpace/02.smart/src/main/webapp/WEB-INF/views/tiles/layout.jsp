@@ -20,10 +20,10 @@
         <meta name="author" content="" />
         <title>스마트웹&amp;앱 ${title}</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="img/hanul.ico" />
+        <link rel="icon" type="image/x-icon" href="<c:url value='/img/hanul.ico'/>" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css?<%=new java.util.Date() %>" rel="stylesheet" />
-        <link href="css/common.css?<%=new java.util.Date() %>" rel="stylesheet" />
+        <link href="<c:url value='/css/styles.css?<%=new java.util.Date() %>'/>" rel="stylesheet" />
+        <link href="<c:url value='/css/common.css?<%=new java.util.Date() %>'/>" rel="stylesheet" />
         
         <!-- cdnjs.com > fontawesome 검색 > style, javascript 선언문 복사해서 넣기 -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -36,13 +36,13 @@
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-light">
                 <a href="<c:url value='/'/>">
-                <img style="width:20%" src="img/hanul.logo.png" class="me-2">
+                <img style="width:20%" src="<c:url value='/img/hanul.logo.png'/>" class="me-2">
                 <span>스마트 웹&amp;앱</span>
                 </a>
                 </div>
                 <div class="list-group list-group-flush">
-                    <a class="${category eq 'cu' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="list.cu">고객관리</a>
-                    <a class="${category eq 'hr' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">사원관리</a>
+                    <a class="${category eq 'cu' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/list.cu'/>">고객관리</a>
+                    <a class="${category eq 'hr' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/hr/list'/>">사원관리</a>
                     <a class="${category eq 'no' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">공지사항</a>
                     <a class="${category eq 'bo' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">방명록</a>
                     <a class="${category eq 'da' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">공공데이터</a>

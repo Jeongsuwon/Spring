@@ -9,8 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import customer.CustomerServiceImpl;
-import customer.CustomerVO;
+import smart.customer.CustomerServiceImpl;
+import smart.customer.CustomerVO;
 
 @Controller
 public class CustomerController {
