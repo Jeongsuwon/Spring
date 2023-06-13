@@ -3,6 +3,18 @@
 
 <mapper namespace="hr">
 
+<!-- 신규사원정보 추가 -->
+<insert id="insert">
+insert into employees (employee_id, last_name, first_name, email, phone_number, salary, hire_date, department_id, job_id)
+ values (employees_seq.nextval, #{last_name}, #{first_name}, #{email}
+, #{phone_number}, #{salary}, #{hire_date}, #{department_id}, #{job_id})
+</insert>
+
+<!-- 사원정보 삭제 -->
+<delete id="delete">
+delete from employees where employee_id = #{employee_id}
+</delete>
+
 <!-- 사원정보 변경저장 -->
 <update id="update">
 update employees set last_name = #{last_name}, first_name = #{first_name}, email = #{email}

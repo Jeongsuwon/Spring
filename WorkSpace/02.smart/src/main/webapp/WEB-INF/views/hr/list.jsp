@@ -20,6 +20,10 @@
 		
 	</select>
 	</div>
+	<div class="col-auto d-flex justify-content-space-between">
+		<button type="button" onclick="location='new'" class="btn btn-primary">사원등록</button>
+		
+	</div>
 	</div>
 	</form>
 	

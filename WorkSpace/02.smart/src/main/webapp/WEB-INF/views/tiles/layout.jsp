@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<c:set var="now" value="<%=new java.util.Date() %>"/>
 
 
 <!DOCTYPE html>
@@ -23,8 +23,8 @@
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="<c:url value='/img/hanul.ico'/>" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="<c:url value='/css/styles.css?<%=new java.util.Date() %>'/>" rel="stylesheet" />
-        <link href="<c:url value='/css/common.css?<%=new java.util.Date() %>'/>" rel="stylesheet" />
+        <link href="<c:url value='/css/styles.css?${now }'/>" rel="stylesheet" />
+        <link href="<c:url value='/css/common.css?${now }'/>" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
         <!-- cdnjs.com > fontawesome 검색 > style, javascript 선언문 복사해서 넣기 -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -33,7 +33,7 @@
         <!-- jquery -->
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <script src="<c:url value='/js/common.js?<%=new java.util.Date() %>'/>"></script>
+        <script src="<c:url value='/js/common.js?${now}'/>"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
         
     </head>
