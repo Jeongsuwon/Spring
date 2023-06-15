@@ -10,8 +10,13 @@
        	</definition>
        	<!-- customer/list, customer/new, customer/info -->
        	<definition name="*/*" template="/WEB-INF/views/tiles/layout.jsp">
+       															      <!-- ┌2번째 * -->					
        			<put-attribute name="container" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
-       											<!--                   └1번째 *, -->
+       											<!--                   └1번째 *-->
+       	</definition>
+       	
+       	<definition name="default/*/*" template="/WEB-INF/views/tiles/default.jsp">
+       			<put-attribute name="container" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
        	</definition>
        	
        </tiles-definitions>

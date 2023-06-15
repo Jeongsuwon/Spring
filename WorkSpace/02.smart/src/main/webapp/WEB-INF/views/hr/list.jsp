@@ -9,7 +9,7 @@
 <body>
 	<h3 class="my-4">사원목록</h3>
 	<form method="post" action="list">
-	<div class="row my-3">
+	<div class="row my-3 justify-content-between">
 	<div class="col-auto d-flex align-items-center">
 	<label class="me-3">부서명</label>
 	<select name="department_id" class="form-select col" onchange="submit()">
@@ -20,7 +20,7 @@
 		
 	</select>
 	</div>
-	<div class="col-auto d-flex justify-content-space-between">
+	<div class="col-auto d-flex">
 		<button type="button" onclick="location='new'" class="btn btn-primary">사원등록</button>
 		
 	</div>

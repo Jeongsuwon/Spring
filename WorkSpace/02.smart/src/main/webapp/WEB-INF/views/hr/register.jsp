@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3 class="my-4">회원가입</h3>
+<h3 class="my-4">신규사원등록</h3>
 <form method="post" action="register">
 <%-- <input type="hidden" name="employee_id" value="${vo.employee_id }"> --%>
 <table class="tb-row">
@@ -23,10 +23,10 @@
 			<td>
 				<div class="row">
 					<div class="col-auto">
-						<input type="text" required class="form-control" name="last_name" value="${vo.last_name }">
+						<input type="text" required class="form-control" placeholder="성" name="last_name" value="${vo.last_name }">
 					</div>
 					<div class="col-auto">
-						<input type="text" class="form-control" name="first_name" value="${vo.first_name }">
+						<input type="text" class="form-control" placeholder="이름" name="first_name" value="${vo.first_name }">
 					</div>
 				</div>
 			</td>
@@ -66,7 +66,7 @@
 			<td>
 			<div class="row">
 					<div class="col-auto">
-						<input type="text" class="form-control date" name="hire_date" value="${vo.hire_date }">
+						<input type="text" class="form-control date" required name="hire_date" value="${vo.hire_date }">
 					</div>
 					</div>
 			</td>
@@ -106,6 +106,13 @@
 	<button class="btn btn-danger px-4" type="button" onclick="history.go(-1)">취소</button>
 </div>
 </form>
+
+<script>
+$(function(){
+	/* $('[name=hire_date]').val( $.datepicker().formatDate('yy-mm-dd', new Date())) */
+	$('[name=hire_date]').val( new Date().toJSON().substr(0,10))
+})
+</script>
 
 </body>
 </html>

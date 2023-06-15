@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+<!--비번변경저장-->
+<update id="resetPassword">
+update member set userpw = #{userpw} where userid = #{userid}
+</update>
+
+
+<select id="useridEmail" resultType="string">
+select name from member where userid = #{userid} and email = #{email}
+</select>
+
+<!-- 해당 아이디의 회원정보 조회 -->
+<select id="info" resultType="smart.member.MemberVO">
+select * from member where userid = #{userid}
+</select>
+
+<!-- 로그인 테스트용 -->
+<select id="loginTest" resultType="smart.member.MemberVO">
+select * from member where userid = #{userid}<!--  and userpw = #{userpw} -->
+</select>
+
+
+<!-- 회원가입 테스트용 -->
+<insert id="joinTest">
+	insert into member( name, userid, userpw, email)
+	values (#{name}, #{userid}, #{userpw}, #{email})
+</insert>
+
+</mapper>

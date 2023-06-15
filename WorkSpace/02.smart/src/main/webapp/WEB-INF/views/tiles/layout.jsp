@@ -31,8 +31,8 @@
         <!-- //fontawesome -->
         
         <!-- jquery -->
-        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
         <script src="<c:url value='/js/common.js?${now}'/>"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
         
@@ -65,16 +65,29 @@
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <!-- 로그인이 안 되어있을 경우 -->
+                                <c:if test="${empty loginInfo }">
+                                <li class="nav-item">
+                                <a class="nav-link" href="<c:url value='/member/login'/>">로그인</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" href="">회원가입</a>
+                                </li>
+                                </c:if>
                                 
+                                <!-- 로그인이 되어있을 경우 -->
+                                <c:if test="${ ! empty loginInfo }">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${loginInfo.name }</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Action</a>
-                                        <a class="dropdown-item" href="#!">Another action</a>
+                                        <a class="dropdown-item">아이디: ${loginInfo.userid }</a>
+                                        <a class="dropdown-item" href="#!">My Profile</a>
+                                        <a class="dropdown-item" href="<c:url value='/member/changePassword'/>">비밀번호 변경</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">Something else here</a>
+                                        <a class="dropdown-item" href="#!">로그아웃</a>
                                     </div>
                                 </li>
+                                </c:if>
                             </ul>
                         </div>
                     </div>
@@ -91,6 +104,6 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script src="<c:url value='/'/>js/scripts.js"></script>
     </body>
 </html>

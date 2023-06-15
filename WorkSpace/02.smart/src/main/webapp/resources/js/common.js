@@ -32,6 +32,7 @@
  $(function(){
 	var today = new Date();
 	var range = today.getFullYear()-100 + ':' + today.getFullYear();
+	if($( ".date" ).length>0){
 	$.datepicker.setDefaults({
 		dateFormat: "yy-mm-dd",
 		changeYear: true,
@@ -44,4 +45,5 @@
 	})
 	$( ".date" ).datepicker();
 	$( ".date" ).attr('readonly', true)
+	}
 })

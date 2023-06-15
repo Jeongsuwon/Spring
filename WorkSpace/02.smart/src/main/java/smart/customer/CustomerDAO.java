@@ -11,7 +11,8 @@ import org.springframework.stereotype.Repository;
 	// 컨트롤러 : @Controller (프레젠테이션 레이어, 웹 요청과 응답을 처리함)
 	// 로직 처리 : @Service (서비스 레이어, 내부에서 자바 로직을 처리함)
 	// 외부I/O 처리 : @Repository (퍼시스턴스 레이어, DB나 파일같은 외부 I/O 작업을 처리함)
-	// 자동 주입 : @Autowired
+	// 자동 주입(주입대상 1개) : @Autowired
+	// 자동 주입(주입대상 2개 이상) : @Qualifier(두 개 이상의 빈이 존재 시 @Autowired로는 객체 선택 불가)
 public class CustomerDAO implements CustomerService {
 	
 	@Autowired @Qualifier("hanul") private SqlSession sql;

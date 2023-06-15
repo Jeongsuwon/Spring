@@ -27,7 +27,7 @@ public class HrController {
 	}
 	
 	@RequestMapping("/register")
-	public String register(EmployeeVO vo) {
+	public String register(EmployeeVO vo, Model model) {
 		
 		service.employee_insert(vo);
 		return "redirect:list";
