@@ -84,7 +84,7 @@
                                         <a class="dropdown-item" href="#!">My Profile</a>
                                         <a class="dropdown-item" href="<c:url value='/member/changePassword'/>">비밀번호 변경</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">로그아웃</a>
+                                        <a class="dropdown-item" href="<c:url value='/member/logout'/>">로그아웃</a>
                                     </div>
                                 </li>
                                 </c:if>

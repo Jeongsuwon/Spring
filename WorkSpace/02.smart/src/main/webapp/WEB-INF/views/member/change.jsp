@@ -50,15 +50,70 @@
 		<div class="btn-toolbar justify-content-center my-3">
 			<button class="btn btn-primary px-4" id="btn-save">변경</button>
 		</div>
-		<script src="<c:url value='/js/member.js'/>"></script>
+		<jsp:include page="/WEB-INF/views/include/modal_alert.jsp"/>
+		
+		<input type="hidden" id="userid" value="${loginInfo.userid}">
+		<c:set var="now" value="<%=new java.util.Date().getTime()%>"/>
+		<script src="<c:url value='/js/member.js?${now }'/>"></script>
 		<script>
-// 		$('#btn-save').click(function(){
-			
-// 		})
+		//비밀번호 변경 성공시 확인버튼 클릭하면 홈으로
+		$('#modal-alert .btn-ok.btn-success').click(function(){
+			if($(this).hasClass('btn-success')){
+			location = '<c:url value="/"/>';
+			}
+		})
+		
+		//새 비밀번호 변경저장처리
+		function resetPassword(){
+			$.ajax({
+				url: 'updatePassword',
+				data: {userid: $('#userid').val(), userpw: $('[name=userpw]').val()}
+			}).done(function(response){
+				if(response){
+					modalAlert('success', "비밀번호변경", "비밀번호가 변경되었습니다");
+				}else{
+					modalAlert('warning', "비밀번호변경", "비밀번호가 변경실패했습니다.");					
+				}
+				new bootstrap.Modal($('#modal-alert')).show();
+			})
+		}
 		
 		$('#btn-save').on('click', function(){
 			if(tagIsValid()){
-					
+				// 입력 현재 비밀번호가 DB에 있는 비밀번호와 같은지 확인
+				
+				$.ajax({
+						url: 'confirmPassword',
+						data: { userpw: $('[name=currentpw]').val(), userid: $('#userid').val()},
+				}).done(function(response){
+// 					console.log(response)
+					response = 0;
+					if(response == 1){
+						alert('현재 비밀번호가 일치하지 않습니다')
+						$('[name=currentpw]').val('').focus();
+					}else{
+						if($('[name=currentpw]').val()==$('[name=userpw]').val()){
+							alert('현재 비밀번호와 동일합니다');
+							$('[name=userpw]').focus();
+				}else{
+					resetPassword();
+				}
+					}
+				}).fail(function(xhr){
+					console.log(xhr.statusText + ':' + xhr.status + '\n' + xhr.responseText)
+				})
+				
+				/*
+					$.ajax({
+						url: 'confirmPassword',
+						data: { userpw: $('[name=currentpw]').val()},
+						success: function(response){
+						},error: function(){
+							
+						} 
+						}
+					})
+					*/
 			}
 		})
 		
@@ -73,9 +128,12 @@
 				$('.check-item').each(function(){
 					//비밀번호/확인 입력상태 체크 처리
 					var status = member.tagStatus($(this))
-					console.log('status>', status)
-					console.log('status>', status.is)
-					console.log('status>', status.desc)
+					if( ! status.is){
+						alert('비밀번호 변경 불가\n' + status.desc)
+						$(this).focus();
+						ok = false;
+						return ok;
+					}
 				})
 			}
 			return ok;

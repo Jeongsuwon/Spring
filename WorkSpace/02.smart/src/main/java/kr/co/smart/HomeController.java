@@ -25,6 +25,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
+		session.setAttribute("now", new java.util.Date().getTime());
 //		session.setAttribute("category", "");
 		session.removeAttribute("category");
 		
