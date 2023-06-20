@@ -42,3 +42,13 @@ table.tb-row tr{
 table.tb-list th, table.tb-list td{
 	text-align: center;
 }
+
+.profile{
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+}
+
+.font-profile{
+	font-size: 38px
+	}

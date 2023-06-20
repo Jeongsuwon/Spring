@@ -2,7 +2,15 @@ package smart.member;
 
 
 public class MemberVO {
-	private String name, userid, userpw, gender, email, profile, birth, phone, post, address, admin;
+	private String name, userid, userpw, gender, email, profile, birth, phone, post, address, admin, social;
+
+	public String getSocial() {
+		return social;
+	}
+
+	public void setSocial(String social) {
+		this.social = social;
+	}
 
 	public String getName() {
 		return name;
