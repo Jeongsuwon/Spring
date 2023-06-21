@@ -27,7 +27,16 @@ public class MemberController {
 	private MemberDAO service;
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
-
+	
+	
+	//회원가입 화면요청
+	@RequestMapping("/join")
+	public String join(HttpSession session) {
+		session.setAttribute("category", "join");
+		return "member/join";
+	}
+	
+	
 	// id: T6a4DJXRkNKz3SYDUkmj
 	// sercret: _IndgXI1AX
 

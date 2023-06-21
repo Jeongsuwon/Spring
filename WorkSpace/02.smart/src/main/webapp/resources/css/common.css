@@ -52,3 +52,29 @@ table.tb-list th, table.tb-list td{
 .font-profile{
 	font-size: 38px
 	}
+	
+.w-px100{
+	width: 100px;
+}
+
+.w-px90{
+	width: 90px;
+}
+
+.w-px80{
+	width: 80px;
+}
+
+.date + .date-delete {
+	position: relative;
+	right: 34px;
+	display: none;
+}
+
+input[type=file] {
+ 	display: none; /* 기본파일태그는 안 보이게 */
+}
+
+.file-preview img {
+	max-height: 38px;
+}

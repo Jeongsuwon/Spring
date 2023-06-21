@@ -13,6 +13,7 @@
 	<c:when test="${category eq 'bo' }"><c:set var="title" value="방명록"/> </c:when>
 	<c:when test="${category eq 'da' }"><c:set var="title" value="공공데이터"/> </c:when>
 	<c:when test="${category eq 'vi' }"><c:set var="title" value="시각화"/> </c:when>
+	<c:when test="${category eq 'join' }"><c:set var="title" value="회원가입"/> </c:when>
 </c:choose>
     <head>
         <meta charset="utf-8" />
@@ -54,6 +55,7 @@
                     <a class="${category eq 'bo' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">방명록</a>
                     <a class="${category eq 'da' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">공공데이터</a>
                     <a class="${category eq 'vi' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">시각화</a>
+                    <a class="${category eq 'join' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="#!">회원가입</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -71,7 +73,7 @@
                                 <a class="nav-link" href="<c:url value='/member/login'/>">로그인</a>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link" href="">회원가입</a>
+                                <a class="nav-link" href="<c:url value='/member/join'/>">회원가입</a>
                                 </li>
                                 </c:if>
                                 
