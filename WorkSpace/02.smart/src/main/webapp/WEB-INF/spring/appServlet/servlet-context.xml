@@ -33,6 +33,10 @@
 			<beans:property name="definitions" value="/WEB-INF/views/tiles/config.xml"></beans:property>
 	</beans:bean>
 	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<beans:property name="defaultEncoding" value="utf-8"/>
+	</beans:bean>
+	
 	<context:component-scan base-package="kr.co.smart" />
 	
 	

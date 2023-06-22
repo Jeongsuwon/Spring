@@ -7,7 +7,39 @@ var member = {
 	// 태그별로 상태확인
 	tagStatus: function(tag, input){
 		if(tag.is("[name=userpw]")) return this.userpwStatus(tag.val(), input);
-		else if(tag.is("[name=userpw_ck]")) return this.userpwCheckStatus(tag.val());	
+		else if(tag.is("[name=userpw_ck]")) return this.userpwCheckStatus(tag.val());
+		else if(tag.is("[name=userid]")) return this.useridStatus(tag.val());
+		else if(tag.is("[name=email]")) return this.emailStatus(tag.val());	
+	},
+	
+	emailStatus: function(email){ 
+		var reg = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+		if(email=="") 				return this.common.empty;
+		else if(reg.test(email))	return this.email.valid;
+		else						return this.email.invalid;
+	},
+	
+	email: {
+		valid: {is:true, desc:'유효합니다.'},
+		invalid: {is:false, desc:'유효하지않습니다.'}
+	},
+	
+	//아이디 입력 상태 확인: 영문 소문자나 숫자만
+	useridStatus: function(id){
+		var reg = /[^a-z0-9]/g;
+		if(id=="") 					  return this.common.empty;
+		else if(id.match(this.space)) return this.common.space;
+		else if(reg.test(id))		  return this.userid.invalid;
+		else if(id.length<5) 		  return this.common.min;
+		else if(id.length>10)		  return this.common.max;
+		else						  return this.userid.valid;
+	},
+	
+	userid: {
+		invalid: {is:false, desc:'영문소문자나 숫자만 입력가능합니다.'},
+		valid: {is:true, desc:'아이디 중복확인하세요.'},
+		usable: {is:true, desc:'사용가능한 아이디입니다.'},
+		unUsable: {is:false, desc:'이미 사용중인 아이디입니다.'},
 	},
 	
 	common : {
