@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
-a{color:initial}
+a{color:inherit}
 
-a:link, a:hover{ text-decoration: none;
+a:not(.btn):link, a:not(.btn):hover{ text-decoration: none;
 		color: inherit;
 }
 
@@ -15,6 +15,11 @@ table{
 
 a.text-link:hover{
 	color: #ff8000; text-decoration: underline;
+}
+
+textarea.form-control{
+	resize: none;
+	height: 400px;
 }
 
 table th, table td {
@@ -48,6 +53,8 @@ table.tb-list th, table.tb-list td{
 	height: 38px;
 	border-radius: 50%;
 }
+
+#modal-image .modal-body img { width: 100%}
 
 .font-profile{
 	font-size: 38px

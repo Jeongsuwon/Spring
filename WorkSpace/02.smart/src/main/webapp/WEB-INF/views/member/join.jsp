@@ -81,9 +81,9 @@ table th span {
 				<td>
 					<div class="row input-check align-items-center">
 						<div class="col-auto">
-						</div>
 							<input type="text" name="email" class="check-item form-control">
 							<div class="desc"></div>
+						</div>
 					</div>
 				</td>
 			</tr>
@@ -217,8 +217,12 @@ table th span {
 		if(invalidStatus($("[name=userpw]"))) return;
 		if(invalidStatus($("[name=userpw_ck]"))) return;
 		if(invalidStatus($("[name=email]"))) return;
+		
+		singleFileUpload();
 		$('form').submit()
 	})
+	
+
 	
 	//체크항목에 입력을 유효하게 했는지 확인
 	function invalidStatus(tag){
@@ -301,7 +305,7 @@ table th span {
 		$('[name=birth]').datepicker('option', 'maxDate', endDay);
 	})
 	
-	var singleFile = ''; //파일 선택시 선택한 첨부파일 정보를 담아둘 변수
+	
 	
 	
 	</script>

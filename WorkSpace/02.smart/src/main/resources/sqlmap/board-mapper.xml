@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+
+<!-- 방명록 글 총 건수 조회 -->
+<select id="totalList" resultType="integer">
+select count(*) from board
+</select>
+
+<select id="list" resultType="smart.board.BoardVO">
+select (select count(*) from board_file where b.id=board_id) filecnt,b.*
+from (select row_number() over(order by id) no, b.*, name
+        from board b inner join member m on b.writer = m.userid) b
+order by no desc
+</select>
+
+<!-- 방명록 글 정보 저장 -->
+<insert id="register">
+<selectKey order="AFTER" resultType="integer" keyProperty="id">
+	select seq_board.currval from dual
+</selectKey>
+
+insert into board(title, content, writer)
+values (#{title}, #{content}, #{writer})
+
+</insert>
+
+<!-- 방명록 첨부된 첨부파일 정보 저장 -->
+<insert id="fileRegister">
+	<foreach collection="fileList" item="file" open="insert all" separator="" close="select * from dual">  
+		into board_file (board_id, filename, filepath)
+		values (#{id}, #{file.filename}, #{file.filepath})
+	</foreach>
+</insert>
+</mapper>

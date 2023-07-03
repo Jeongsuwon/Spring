@@ -1,0 +1,80 @@
+ I.클론 코딩 : HTML, CSS + JS/jQuery
+(= 실제 사례, 서비스를 보고 베끼듯 구현)
+   1) UI만 보고 직접 코드를 작성
+   2) 레이아웃을 최대한 같게
+   3) 소스코드 보기?는 하지 않고, 스스로 만들수 있게~
+   4) 이미지는 그대로 최대한 사용
+   5) github 에 올려보기! (만들고 끝내면 안되고..)
+
+- 스타벅스
+- 카카오
+- 쇼핑몰(11번가, 쿠팡?)
+...직접 사용하는 (경험 | 언급-트렌드?)...
+
+ 
+
+
+========== 랭킹 사이트 : 트렌드 분석, 자료 수집 =======
+1) https://www.dbcut.com/
+2) https://www.gdweb.co.kr/main/   
+3) https://www.pinterest.co.kr/    [해외]
+4) https://www.behance.net/        [해외]
+----------------------------------------------------------------
+
+
+   HTML                                              CSS
+Markup(마크업)                           StyleSheet            ===> Layout
+화면에 웹문서 구조작성       HTML의 색상,배치,위치 결정
+※ Semantic 웹을 지켜서~!   ==> header, section, footer, nav, article, address...
+                                                          thead, tbody, tfoot, figcaption, figure
+
+1)  Block vs Inline (Inline-Block) : 기본
+2)  float   ,   position,   flex-box,   grid : 배치/위치를 결정
+※ column-count : 컬럼으로 화면을 배치==>실제 사용은..?;;
+3) media query ==> device 폭을 기준~ +@ (미디어쿼리 v4)
+                                       (미디어쿼리 v3)
+※ 부트스트랩, 테일위드CSS와 같은 CSS FRAMEWORK를 활용!
+
+
+※ 웹 서비스에 필요한 요소들
+1) 로고
+2) 내비게이션(=메뉴) : 드롭다운 내비게이션, 메가 내비게이션
+3) 검색
+4) 회원가입 | 로그인 | 정보수정 | 회원탈퇴
+5) 캐러셀
+6) 컨텐츠 : 헤더 ~ 푸터
+7) 모달 / 팝업
+8) 다크모드 선택버튼
+
+
+- 피그마 
+1) Create New Team : 팀장이 만들어서 팀원을 이메일 주소로 초대
+2) Figjam : 아이디어 스케치 (간단한? 화이트 보드 기능을 제공)
+3) Figma : 스케치 to 디자인 ==> (커뮤니티 검색) UI KIT, Android Kit, iOS Kit...
+
+
+:: Eclipse + Emmet(was google zen-coding)
+
+원래는 https://code.google.com/archive/p/zen-coding 였으나,
+지금은 Emmet!
+
+1. emmet : 코딩/편집 고속기법?
+
+   https://emmet.io > Download > Eclipse -> Installation
+
+2. eclipse indent guide plugin : 가이드 라인 플러그인
+
+   ==> 블로그 참조
+
+
+
+
+
+
+
+
+
+
+
+
+

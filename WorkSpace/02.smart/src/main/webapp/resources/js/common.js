@@ -3,6 +3,75 @@
  https://api.jqueryui.com/datepicker/
  */
 
+//10MB를 넘는 파일을 걸러내는 처리
+function filteredFile(files){
+	var exist = false;
+	//files는 객체, 값만 따로 뽑아본다
+	console.log('1>', files)
+	Object.values(files).filter(function(file){
+		if(file.size > 1024*1024*10) exist = true;
+		return file.size <= 1024*1024*10;
+	})
+	console.log('2>', files)
+	
+	if(exist){
+		alert('10Mb 이상 첨부 불가')
+	}
+	
+	return files;//걸러낸 10Mb 이하 파일들
+	
+}
+
+//파일관리 객체 생성자 함수
+function FileList(){
+	this.files = [];
+	this.setFile = function(file){
+	//선택한 파일마다 alert가 뜬다
+//		if(file.size > 1024*1024*10){
+//			alert("10MB 이상의 파일은 첨부할 수 없습니다")
+//			return;
+//		}
+		this.files.push(file);
+	}
+	this.getFile = function(){
+		return this.files;
+	}
+	this.removeFile = function(i){
+		this.files.slice(i, 1);
+	}
+	//파일을 보여줄 함수
+	this.showFile = function(){
+		var tag = '';
+		if(this.files.length > 0){
+			for(var i=0; i<this.files.length; i++){
+				tag += 
+				`<div class="file-item d-flex gap-2 align-items-center my-1">
+							<button type="button" class="btn-close small" data-seq="${i}"/>
+							<span class="file-name">${this.files[i].name}</span>
+						</div>`;
+			}
+		}else{
+			tag = '<div class="text-center py-3">첨부할 파일을 마우스로 끌어오세요</div>';
+		}
+		$('.file-drag').html(tag);
+	}
+}
+
+
+var singleFile = ''; //파일 선택시 선택한 첨부파일 정보를 담아둘 변수
+
+//파일첨부 정보 file태그에 담기
+	function singleFileUpload(){
+		if(singleFile != ""){
+			var transfer = new DataTransfer();
+			transfer.items.add( singleFile );
+			//화면 태그 속성: attr -> 기본에 해당, 나중에 속성추가지정: prop
+			$('input[type=file]').prop('files', transfer.files);
+			console.log($('input[type=file]').val())
+		}
+	}
+
+
 function toPhone(tag) {
 	var phone = tag.val().replace(/[^0-9]/g, '').replace(/[-]/g, ''); //숫자만 입력되게 처리 010-1234-4567 -> 01012344567
 	if (phone.length > 1) { //2자리 이상 입력하면: 02, 062, 010
@@ -59,10 +128,22 @@ $(document).on('click', '.date + .date-delete', function(){
 		var _preview = $('#file-attach .file-preview');
 		$('input[type=file]').val(''); //첨부되어있던 이미지파일정보 없애기
 		if(_preview.length>0) _preview.empty();//미리보기한 이미지 태그 없애기
-		console.log('2>', $('#file-single').val());
+		var _preview = $('#file-attach .file-name'); //파일명 태그
+		if(_preview.length>0) _name.empty();//파일명 태그 없애기
 		
+	}).on('click', '.file-preview img', function(){
+		//미리보기 이미지 클릭시 크게 보이게
+		if($('#modal-image').length == 1){
+			$('.modal-body').html( $(this).clone() );
+			new bootstrap.Modal($('#modal-image')).show()
+		}
 	})
-
+	.on('click', '.file-item .btn-close', function(){
+		//첨부된 파일 삭제 클릭시
+		fileList.removeFile($(this).data('seq'));
+		fileList.showFile();
+	})
+	
 //파일이 이미지파일인지 확인
 function isImage(filename){
 	// abc.png, abc.jpg ...
@@ -72,19 +153,50 @@ function isImage(filename){
 	
 }
 
+//첨부 파일 크기 제한 함수
+function rejectedFile(fileInfo, tag){
+	// 1024byte = 1kb, 1Mb = 1024 * 1024 byte
+	if(fileInfo.size > 1024*1024*10){
+		alert("10Mb를 넘는 파일은 첨부할 수 없습니다!");
+		tag.val('');
+		return true;
+	}else{
+		return false;
+	}
+}
+
 $(function() {
+	
+	//다중 파일선택 처리
+	$('input#file-multiple').on('change', function(){
+		var files = this.files;
+		files = filteredFile(files);
+		for(var i=0; 1<files.length; i++){
+			fileList.setFile(files[i]);
+		}
+		fileList.showFile()
+	})
+	
 	//프로필 이미지 선택처리
 	$('input#file-single').on('change', function(){
 //		console.log($(this))
 //		console.log(this.files)
 		
-		var _priview = $('#file-attach .file-preview');
-		var _delete = $('#file-attach .file-delete');
+		var _priview = $('#file-attach .file-preview'); //이미지 미리보기
+		var _delete = $('#file-attach .file-delete'); //파일 삭제요소
+		var _name = $('#file-attach .file-name');//파일명 요소
 		
 		var attached = this.files[0];
 		console.log(attached)
 		
 		if(attached){
+			// 파일사이즈 제한
+			if(rejectedFile(attached, $(this))) return;
+			// 파일명 보여지게
+			if(_name.length>0){
+				_name.text( attached.name);
+			}
+			
 			//이미지파일인지 확인
 			if(isImage(attached.name)){
 			    singleFile = attached; // 선택한 파일정보를 관리
@@ -93,19 +205,27 @@ $(function() {
 				if(_priview.length > 0){
 					_priview.html("<img>");
 					
+				}else{
+					//첨부파일이 이미지인데, 미리보기 요소가 없으면 동적으로 만들어 보이게 처리
+					//삭제버튼 앞에 넣기
+					_delete.before("<span class='file-preview'><img></span>");
+					_priview = $('#file-attach .file-preview');
+				}	
 				var reader = new FileReader();
 				reader.readAsDataURL(attached);
 				reader.onload = function(e){
 					_priview.children("img").attr("src", e.target.result);
 //					_priview.children("img").attr("src", this.result);
 				}
-				}	
 			}else{
-				singleFile = ''; //이미지가 아닌 파일인 경우는 관리정보를 초기화
 				//이전 선택되었던 이미지파일 처리
 				_priview.empty();
+				
+				if($(this).hasClass("image-only")){
+				singleFile = ''; //이미지가 아닌 파일인 경우는 관리정보를 초기화					
 				$(this).val('');//실제 file태그의 정보 초기화
 				_delete.addClass('d-none');
+				}
 				
 			}
 		}else{
@@ -116,7 +236,7 @@ $(function() {
 		
 	})
 	
-
+	
 	
 	$('.date').change(function(){
 		$(this).next('.date-delete').css('display', 'inline')
@@ -125,7 +245,36 @@ $(function() {
 	$('[name=phone]').keyup(function() {
 		toPhone($(this));
 	})
-
+		
+	$('body').on('dragover dragleave drop', function(e){
+		e.preventDefault();
+				})	
+	
+	//드래그 드랍으로 파일첨부 처리
+	$('.file-drag').on({
+		'dragover dragleave drop': function(e){
+			e.preventDefault();
+			//드래그오버시 입력태그에 커서가 있을 때처럼 보여지게
+			if(e.type=='dragover') $(this).addClass('drag-over')
+			else 				   $(this).removeClass('drag-over')
+		},
+		'drop': function(e){
+			console.log(e.originalEvent.dataTransfer.files)
+			var files = e.originalEvent.dataTransfer.files;
+			files = filteredFile(files);
+			
+			for(var i=0; i<files.length; i++){
+				//폴더는 담지 않는다
+				if(files[i].type ==""){
+					alert("폴더는 첨부할 수 없습니다")
+				}else{
+				fileList.setFile(files[i]);				
+				}
+			}
+			fileList.showFile();
+		}
+	})
+	
 	var today = new Date();
 	var range = today.getFullYear() - 100 + ':' + today.getFullYear();
 	if ($(".date").length > 0) {
@@ -143,3 +292,30 @@ $(function() {
 		$(".date").attr('readonly', true)
 	}
 })
+
+//서브밋 전 다중파일첨부 정보 file태그에 담기
+function multipleFileUpload(){
+	var transfer = new DataTransfer();
+	var files = fileList.getFile();
+	if( files.length>0){
+		for(var i=0; i<files.length; i++){
+			transfer.items.add(files[i])
+		}
+	}
+	$('input#file-multiple').prop('files', transfer.files)
+}
+
+
+//입력항목 입력여부 확인
+function emptyCheck(){
+	var ok = true;
+	$('.check-empty').each(function(){
+		if($(this).val()==""){
+			alert($(this).attr('title') + "을 입력하세요");
+			$(this).focus();
+			ok =  false;
+			return ok; 
+		}
+	})
+	return ok;
+}
