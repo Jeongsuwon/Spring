@@ -43,17 +43,23 @@ public class MemberController {
 	public String join(MemberVO vo, HttpServletRequest request, MultipartFile file) {
 		if(! file.isEmpty()) { //첨부파일이 있는 경우
 			//서버의 물리적인 영역에 파일을 저장하는 처리 
-			
+			vo.setProfile( common.fileUpload("profile", file, request));
 		}
+	
 		// 화면에서 입력한 정보로 DB에 신규회원정보저장한 후
 		// 회원가입 성공 여부를 alert으로 띄운다.
 		// 비밀번호 암호화
 		vo.setUserpw(pwEncoder.encode(vo.getUserpw()));
 		StringBuffer msg = new StringBuffer("<script>");
 		if (service.member_join(vo) == 1) {
+			String welcomeFile = request.getSession().getServletContext().getRealPath("resources/files/회원가입축하.txt");
+			common.sendWelcome(vo, welcomeFile);
 			msg.append("alert('회원가입을 축하합니다 ^^'); location='")
 			.append(request.getContextPath())
 			.append("' ");
+			
+			//가입성공시 자동로그인 되게
+			request.getSession().setAttribute("loginInfo", vo);
 		} else {
 			msg.append("alert('회원가입 실패 ㅠㅠ'); history.go(-1)");
 		}

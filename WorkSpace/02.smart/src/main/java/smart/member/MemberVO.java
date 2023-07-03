@@ -99,5 +99,10 @@ public class MemberVO {
 	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
+
+	public MemberVO member_info(String userid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
