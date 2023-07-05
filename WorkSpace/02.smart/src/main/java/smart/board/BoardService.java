@@ -9,4 +9,6 @@ public interface BoardService {
 	int board_update(BoardVO vo);//방명록 변경, 저장
 	int board_read(int id);//조회수 증가처리
 	int board_delete(int id);//방명록 글 삭제
+	
+	FileVO board_file_info(int id);//선택한 파일정보조회
 }
