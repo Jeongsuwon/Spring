@@ -45,6 +45,7 @@
 		</table>
 		<input type="hidden" name="writer" value="${loginInfo.userid }">
 		<!-- 원글관련정보 -->
+		<input type="hidden" name="rid" value="${vo.id }">
 		<input type="hidden" name="root" value="${vo.root }">
 		<input type="hidden" name="step" value="${vo.step }">
 		<input type="hidden" name="indent" value="${vo.indent }">

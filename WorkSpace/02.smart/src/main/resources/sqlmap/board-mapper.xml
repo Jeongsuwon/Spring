@@ -3,16 +3,68 @@
 
 <mapper namespace="board">
 
+<update id="read">
+	update board set readcnt = readcnt+1 where id = #{id}
+</update>
+
+<!-- 검색 조건 -->
+<sql id="searchWhere">
+	<choose>
+		<when test="search == 's1'"> <!-- 전체 -->
+			where title like '%' || #{keyword} || '%'
+			or content like '%' || #{keyword} || '%'
+			or writer in(select userid from member where name like '%' || #{keyword} || '%')
+		</when>
+		<when test="search == 's2'"> <!-- 제목 -->
+			where title like '%' || #{keyword} || '%'
+		</when>
+		<when test="search == 's3'"> <!-- 내용 -->
+			where content like '%' || #{keyword} || '%'
+		</when>
+		<when test="search == 's4'"> <!-- 작성자 -->
+			where writer in (select userid from member where name like '%' || #{keyword} || '%')
+		</when>
+		<when test="search == 's5'"> <!-- 제목 + 내용 -->
+			where title like '%' || #{keyword} || '%'
+			or content like '%' || #{keyword} || '%'
+		</when>
+	</choose>
+</sql>
+
+<!-- 선택한 방명록 글 삭제 -->
+<delete id="delete">
+delete from board where id = #{id}
+</delete>
+
+<!-- 선택한 방명록 글 조회 -->
+<select id="info" resultType="smart.board.BoardVO">
+	select b.*, name
+	from board b inner join member m on writer = userid
+	where id = #{id}
+</select>
+
+<!-- 선택한 방명록 글의 첨부파일 정보 조회 -->
+<select id="fileList" resultType="smart.board.FileVO">
+	select * from board_file where board_id = #{id}
+</select>
+
+
+<!-- 선택한 첨부파일 조회 -->
+<select id="fileInfo" resultType="smart.board.FileVO">
+	select * from board_file where id = #{id}
+</select>
 
 <!-- 방명록 글 총 건수 조회 -->
 <select id="totalList" resultType="integer">
-select count(*) from board
+select count(*) from board<include refid="searchWhere"/>
 </select>
 
 <select id="list" resultType="smart.board.BoardVO">
 select (select count(*) from board_file where b.id=board_id) filecnt,b.*
 from (select row_number() over(order by id) no, b.*, name
-        from board b inner join member m on b.writer = m.userid) b
+        from board b inner join member m on b.writer = m.userid
+        <include refid="searchWhere"/>) b
+where no between #{beginList} and #{endList}       
 order by no desc
 </select>
 
@@ -31,7 +83,7 @@ values (#{title}, #{content}, #{writer})
 <insert id="fileRegister">
 	<foreach collection="fileList" item="file" open="insert all" separator="" close="select * from dual">  
 		into board_file (board_id, filename, filepath)
-		values (#{id}, #{file.filename}, #{file.filepath})
+ 		values (#{id}, #{file.filename}, #{file.filepath})
 	</foreach>
 </insert>
 </mapper>

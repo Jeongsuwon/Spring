@@ -51,9 +51,9 @@ where id = #{id}
 <!--  신규 답글 등록 -->
 <insert id="replyRegister">
 
-	insert into notice(title, content, writer, filename, filepath, root, step, indent)
+	insert into notice(title, content, writer, filename, filepath, root, step, indent, rid)
 	values (#{title}, #{content}, #{writer}, #{filename, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR}
-			, #{root}, #{step}+1, #{indent}+1)
+			, #{root}, #{step}+1, #{indent}+1, #{rid})
 </insert>
 
 <!--  신규 공지글 등록 -->

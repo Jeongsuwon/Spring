@@ -37,9 +37,9 @@
 	</logger>
 
 	
-	<logger name="jdbc.resultsettable">
-		<level value="info" />
-	</logger>
+<!-- 	<logger name="jdbc.resultsettable"> -->
+<!-- 		<level value="info" /> -->
+<!-- 	</logger> -->
 	
 	
 	<!-- Root Logger -->

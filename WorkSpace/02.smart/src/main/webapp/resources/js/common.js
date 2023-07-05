@@ -8,7 +8,7 @@ function filteredFile(files){
 	var exist = false;
 	//files는 객체, 값만 따로 뽑아본다
 	console.log('1>', files)
-	Object.values(files).filter(function(file){
+	files = Object.values(files).filter(function(file){
 		if(file.size > 1024*1024*10) exist = true;
 		return file.size <= 1024*1024*10;
 	})
@@ -171,10 +171,11 @@ $(function() {
 	$('input#file-multiple').on('change', function(){
 		var files = this.files;
 		files = filteredFile(files);
-		for(var i=0; 1<files.length; i++){
+		for(var i=0; i<files.length; i++){
 			fileList.setFile(files[i]);
 		}
 		fileList.showFile()
+		console.log(fileList)
 	})
 	
 	//프로필 이미지 선택처리

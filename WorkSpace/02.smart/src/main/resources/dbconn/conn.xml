@@ -14,12 +14,13 @@
 			<property name="password" value="${hanul.password}"></property>
 	</bean>
 	
-		<bean id="dbcpHr" class="org.apache.commons.dbcp2.BasicDataSource">
+	<bean id="dbcpHr" class="org.apache.commons.dbcp2.BasicDataSource">
 			<property name="driverClassName" value="${oracle.driver}"></property>
 			<property name="url" value="${oracle.url}"></property>
 			<property name="username" value="${hr.username}"></property>
 			<property name="password" value="${hr.password}"></property>
 	</bean>
+	
 	
 <!-- 	 <bean id="dbcp" class="org.apache.commons.dbcp2.BasicDataSource">
 <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
