@@ -6,7 +6,7 @@
 	<input type="hidden" name="keyword" value="${page.keyword}" >
 	<input type="hidden" name="viewType" value="${page.viewType}" >
 	<input type="hidden" name="pageList" value="${page.pageList}" >
-	<input type="hidden" name="id" value="" >
+	<input type="hidden" name="id" value="${id }" >
 </form>
 
 <script>

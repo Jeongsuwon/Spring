@@ -55,6 +55,14 @@
 			</tr>
 		</table>
 		<input type="hidden" name="writer" value="${loginInfo.userid }">
+			<input type="hidden" name="curPage" value="${page.curPage}" >
+			<input type="hidden" name="search" value="${page.search}" >
+			<input type="hidden" name="keyword" value="${page.keyword}" >
+			<input type="hidden" name="viewType" value="${page.viewType}" >
+			<input type="hidden" name="pageList" value="${page.pageList}" >
+			<input type="hidden" name="id" value="${vo.id }" >
+			<!-- 삭제한 첨부파일 id 목록 -->
+			<input type="hidden" name="removed">
 
 	</form>
 	<div class="btn-toolbar my-3 gap-2 justify-content-center">
@@ -66,22 +74,22 @@
 	var fileList = new FileList();
 	
 	<c:forEach items="${vo.fileList }" var="f">
-		fileList.setFile(urlTofile("${f.filepath}", "${f.filename}"))
+		fileList.setFile(urlTofile("${f.filepath}", "${f.filename}"),${f.id})
 	</c:forEach>
 		console.log(fileList)
 		
 // 	물리적인 파일정보를 읽어와 파일정보를 담도록 한다
-function urlToFile(url. filename){
+function urlTofile(url, filename){
 			//함수1 호출
-			//ajax: 기본 비동기
+			
 			var file;
 			$.ajax({
 				url: url,
 				responseType: 'blob',
-				async: false,
+				async: false, //ajax: 기본 비동기(true), 동기처리시 false
 			}).done(function(response){
 				var blob = new Blob([response]);
-				var file = new File([blob], filename)
+				file = new File([blob], filename)
 			})
 			return file;
 		}
@@ -101,10 +109,14 @@ function urlToFile(url. filename){
 		})	
 	*/
 	
-	
+		$('#btn-cancle').on('click',function(){
+			$('form').attr('action', 'info').submit()	
+		})
+		
 		$('#btn-save').on('click', function() {
 			if (emptyCheck()) {
-				multipleFileUpload()
+				multipleFileUpload();
+				$('[name=removed]').val(fileList.info.removeId)
 				$('form').submit()
 			}
 		})

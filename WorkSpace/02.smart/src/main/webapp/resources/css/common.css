@@ -22,6 +22,9 @@ textarea.form-control{
 	height: 400px;
 }
 
+.comment textarea {height: 90px}
+.comment > * {height: 90px}
+
 table th, table td {
 	border-right: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
