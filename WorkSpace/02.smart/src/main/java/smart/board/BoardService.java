@@ -1,5 +1,7 @@
 package smart.board;
 
+import java.util.List;
+
 import smart.common.PageVO;
 
 public interface BoardService {
@@ -11,4 +13,6 @@ public interface BoardService {
 	int board_delete(int id);//방명록 글 삭제
 	
 	FileVO board_file_info(int id);//선택한 파일정보조회
+	List<FileVO> board_file_remove(String removed);//삭제할 파일들 정보 조회
+	int board_file_delete(int id); //선택 파일정보 삭제
 }

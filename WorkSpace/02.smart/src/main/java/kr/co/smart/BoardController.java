@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import smart.board.BoardCommentVO;
 import smart.board.BoardDAO;
 import smart.board.BoardVO;
 import smart.board.FileVO;
@@ -62,6 +63,35 @@ public class BoardController {
 	//삭제처리 후 화면 list
 	//수정처리 후 화면 info
 	
+	//선택한 방명록 정보 수정처리 요청
+	@RequestMapping("/update")
+	public String update(BoardVO vo, PageVO page, Model model, MultipartFile file[], 
+							HttpServletRequest req, String removed){
+		//첨부된 파일들 담기
+		vo.setFileList(common.attachedFiles("board", file, req));
+		
+		//화면에서 변경된 입력정보로 DB에 변경저장 
+		if(service.board_update(vo)==1) {
+			//삭제대상 파일이 있는 경우는 삭제처리: DB + 물리적파일
+			if( ! removed.isEmpty()) {
+				//DB에서 삭제하기 전에 삭제할 파일정보 조회해두기
+				 List<FileVO> files = service.board_file_remove(removed);
+				//DB삭제
+				for(FileVO f: files) {
+					if(service.board_file_delete( f.getId())==1) {
+						//물리적파일 삭제
+						common.deleteFile(f.getFilepath(), req);
+					}
+				}
+			}
+		}
+		
+		model.addAttribute("url", "board/info");
+		model.addAttribute("page", page);
+		model.addAttribute("id", vo.getId());
+		return "board/redirect";
+	}
+	
 	//선택한 방명록 정보 수정화면 요청
 	@RequestMapping("/modify")
 	public String modify(Model model, int id, PageVO page) {
@@ -95,6 +125,12 @@ public class BoardController {
 //		return "redirect:list";
 	}
 	
+	//댓글 등록처리
+	@RequestMapping("/comment/register")
+	public void comment_register(BoardCommentVO vo) {
+		
+	}
+	
 	//선택한 방명록 정보화면 요청
 	@RequestMapping("/info")
 	public String info(Model model, int id, PageVO page) {
@@ -116,12 +152,12 @@ public class BoardController {
 	@RequestMapping("/list")	
 	public String list(HttpSession session, PageVO page, Model model) {
 		// 임시 로그인 처리(테스트 후 삭제 or 주석)
-					String userid = "kim";
-					String userpw = "aA123";
-					MemberVO login =  member.member_info(userid);
-					if(pw.matches(userpw, login.getUserpw())) {
-						session.setAttribute("loginInfo", login);
-					}
+//					String userid = "kim";
+//					String userpw = "aA123";
+//					MemberVO login =  member.member_info(userid);
+//					if(pw.matches(userpw, login.getUserpw())) {
+//						session.setAttribute("loginInfo", login);
+//					}
 				//-------------------------------------
 						
 				

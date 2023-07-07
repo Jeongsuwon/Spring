@@ -3,6 +3,16 @@
 
 <mapper namespace="board">
 
+
+
+
+
+<!-- 방명록 글 변경 저장처리 -->
+<update id="update">
+	update board set title = #{title}, content = #{content}
+	where id = #{id}
+</update>
+
 <update id="read">
 	update board set readcnt = readcnt+1 where id = #{id}
 </update>
@@ -43,10 +53,20 @@ delete from board where id = #{id}
 	where id = #{id}
 </select>
 
+<!-- 삭제해야할 첨부파일 목록조회 -->
+<select id="fileRemoved" resultType="smart.board.FileVO">
+	select * from board_file where id in (${removed})
+</select>
+
 <!-- 선택한 방명록 글의 첨부파일 정보 조회 -->
 <select id="fileList" resultType="smart.board.FileVO">
 	select * from board_file where board_id = #{id}
 </select>
+
+<!-- 삭제해야할 첨부파일 삭제처리 -->
+<delete id="fileDelete">
+	delete from board_file where id = #{id}
+</delete>
 
 
 <!-- 선택한 첨부파일 조회 -->

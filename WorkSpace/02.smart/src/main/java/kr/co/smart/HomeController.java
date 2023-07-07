@@ -22,6 +22,18 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	@RequestMapping("/test1")
+	public String test1(String name, int price, Model model) {
+		model.addAttribute("name", name);
+		model.addAttribute("price", price);
+		return "ajax/ex/test1";
+	}
+	
+	@RequestMapping("/xml")
+	public String xml() {
+		return "ajax/ex/drink";
+	}
+	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
