@@ -3,8 +3,24 @@
 
 <mapper namespace="board">
 
+<!-- 방명록 댓글변경저장 -->
+<update id="commentUpdate">
+	update board_comment set content = #{content} where id = #{id}
+</update>
 
+<!-- 방명록에 대한 댓글목록 -->
+<select id="commentList" resultType="smart.board.BoardCommentVO">
+	select c.*, m.profile, m.name
+	from board_comment c inner join member m on m.userid = c.writer
+	where board_id = #{board_id}
+	order by c.id desc
+</select>
 
+<!-- 방명록 댓글신규저장처리 -->
+<insert id="commentRegister">
+	insert into board_comment(content, writer, board_id)
+	values (#{content}, #{writer}, #{board_id})
+</insert>
 
 
 <!-- 방명록 글 변경 저장처리 -->
