@@ -71,6 +71,10 @@
 			</div>
 		</div>
 	</div>
+	<!-- 댓글목록출력부분 -->
+	<div class="row justify-content-center mt-4" id="comment-list">
+		
+	</div>
 	
 	<form method="post">
 		<input type="hidden" name="file" >
@@ -84,6 +88,19 @@
 	<jsp:include page="/WEB-INF/views/include/modal_image.jsp"/>
 	<jsp:include page="/WEB-INF/views/include/modal_alert.jsp"></jsp:include>
 	<script>
+	commentList();
+	
+	//댓글목록조회해와 출력
+	function commentList(){
+		$.ajax({
+			/* url: '<c:url value="/board/comment/list?id=772"/>' 여기서 id는 board_id */
+			url: '<c:url value="/board/comment/list/${vo.id}"/>'
+		}).done(function(response){
+			console.log(response)
+			$('#comment-list').html(response)
+		});
+	}
+	
 	//댓글등록처리
 	$('.btn-register').click(function(){
 		//입력한 글이 있을 때만 처리
@@ -96,6 +113,13 @@
 			data: {board_id: ${vo.id}, content: _textarea.val(), writer: '${loginInfo.userid}'},
 		}).done(function(response){
 			console.log(response)
+			if(response){
+				alert("댓글이 등록되었습니다");
+				initRegisterContent();
+				commentList();
+			}else{
+				alert("댓글 등록 실패ㅠㅠ");
+			}
 		});
 	})
 	
@@ -125,7 +149,7 @@
 			initRegisterContent();	
 		}
 		
-	}).on('keyup', '#comment-register textarea', function(){
+	}).on('keyup', '.comment textarea', function(){
 		var comment = $(this).val();
 	if( comment.length > 200 ){
 		alert("최대 200자까지 입력할 수 있습니다");
