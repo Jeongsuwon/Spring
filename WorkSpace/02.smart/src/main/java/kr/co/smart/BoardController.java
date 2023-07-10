@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import smart.board.BoardCommentVO;
@@ -125,10 +128,29 @@ public class BoardController {
 //		return "redirect:list";
 	}
 	
+	//댓글 목록조회
+	@RequestMapping("/comment/list/{board_id}")
+	public String comment_list(@PathVariable int board_id, Model model) { /* @PathVariable -> 경로형태로 데이터 입력 */
+		//해당 방명록 글에 대한 댓글목록을 DB에서 조회, 댓글목록 화면에 출력
+		model.addAttribute("list", service.board_comment_list(board_id));
+		model.addAttribute("crlf", "\r\n");
+		model.addAttribute("lf", "\n");
+		return "board/comment/comment_list";
+	}
+	
+	//댓글정보 수정처리
+	//json으로 보내진 정보를 담기 위한 annotation: @RequestBody
+	@ResponseBody @RequestMapping("/comment/update")
+	public String comment_update(@RequestBody BoardCommentVO vo) {
+		//화면에서 변경입력한 정보를 DB에 변경 저장처리
+		return service.board_comment_update(vo) == 1 ? "성공" : "실패";
+	}
+	
 	//댓글 등록처리
-	@RequestMapping("/comment/register")
-	public void comment_register(BoardCommentVO vo) {
-		
+	@ResponseBody @RequestMapping("/comment/register")
+	public boolean comment_register(BoardCommentVO vo) {
+		//화면에서 입력한 댓글 정보를 DB에 신규저장
+		return service.board_comment_register(vo) == 1 ? true : false;
 	}
 	
 	//선택한 방명록 정보화면 요청
