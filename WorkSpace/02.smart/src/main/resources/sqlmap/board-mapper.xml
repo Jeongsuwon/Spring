@@ -3,6 +3,11 @@
 
 <mapper namespace="board">
 
+<!-- 방명록 댓글삭제 -->
+<delete id="commentDelete">
+	delete from board_comment where id = #{id}
+</delete>
+
 <!-- 방명록 댓글변경저장 -->
 <update id="commentUpdate">
 	update board_comment set content = #{content} where id = #{id}
