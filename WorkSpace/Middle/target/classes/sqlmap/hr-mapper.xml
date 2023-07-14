@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr">
+
+<select id="list" resultType="hr.EmployeesVO">
+	select
+e.employee_id,
+e.first_name || ' ' || e.last_name as emp_name, 
+case 
+when mod(employee_id, 2)=0 then replace(email, instr(email ,'@', 1)+1, 'naver.com')
+else replace(email, instr(email ,'@', 1)+1, 'gmail.com')
+end as email, replace(phone_number, '.', '-') as phone_number,
+to_char(hire_date, 'YYYY-MM-dd') hire_date,
+case when commission_pct is not null 
+then to_char(salary * 1289 + nvl2(commission_pct, (salary * 1289) * commission_pct, 0), '999,999,999') || '원' ||
+'(' || to_char(commission_pct * (salary * 1289), '999,999,999') || ')' ELSE to_char(salary * 1289, '999,999,999') ||'원' END as salary,
+j.job_title,
+d.department_name
+from employees e left join jobs j on e.job_id = j.job_id
+left join departments d on e.department_id = d.department_id
+</select>
+
+</mapper>
