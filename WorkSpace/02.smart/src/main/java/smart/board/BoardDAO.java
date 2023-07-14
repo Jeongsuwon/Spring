@@ -93,8 +93,7 @@ public class BoardDAO implements BoardService {
 
 	@Override
 	public int board_comment_delete(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sql.delete("board.commentDelete", id);
 	}
 
 	@Override
