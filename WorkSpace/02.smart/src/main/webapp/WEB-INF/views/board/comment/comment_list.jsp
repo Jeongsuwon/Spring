@@ -28,7 +28,7 @@
 					<span class="text-secondary me-2">${profile }</span>
 					<span>${vo.name } [${vo.writedate } ]</span>
 				</div>
-				<c:if test="${loginInfo.userid eq vo.writer }">
+				<c:if test="${loginInfo.userid eq vo.writer or loginInfo.admin eq 'Y'}">
 				<div>
 					<span class="title me-4 d-none">댓글수정 [<span class="writing"> 0 / 200 </span>]</span>
 					<a class="btn btn-outline-info btn-sm btn-modify-save">수정</a>
@@ -60,7 +60,9 @@
 				data: JSON.stringify({id: _content.data('id'), content: _content.find('textarea').val()})
 			}).done(function(response){
 				console.log(response)
-				alert(response)
+				alert(response.message)
+				_content.find('.hidden').text(response.content);
+				stayStatus(_content);
 			});
 		}
 			
@@ -82,10 +84,33 @@
 		
 		_content.find('.hidden').html(`\${comment}`); //원래 댓글내용 그대로 담기
 	}
-
+	
+	// 삭제/취소 버튼
 	$('.btn-delete-cancel').click(function(){
 		 var _content = $(this).closest('.content');
-		 stayStatus(_content);
+		 if($(this).text()=='취소'){
+				 stayStatus(_content);
+			 
+		 }else{
+			 //삭제클릭시
+			 if(confirm('댓글을 삭제하시겠습니까?')){
+/* 				 $.ajax({
+					 url: '<c:url value="/board/comment/delete"/>',
+					 data: {id: _content.data('id')}
+				 }).done(function(){
+					 commentList();
+				 }) */
+				 //댓글 삭제 후 해당 댓글태그만 삭제하는 경우
+				 $.ajax({
+					 url: '<c:url value="/board/comment/delete"/>',
+					 data: {id: _content.data('id')}
+				 }).done(function(response){
+					 if(response){
+						 _content.remove();
+					 }
+				 })
+			 }
+		 }
 	})
 	
 	//가만있는 모드 상태

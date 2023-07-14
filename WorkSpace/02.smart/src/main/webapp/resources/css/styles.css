@@ -3648,15 +3648,16 @@ textarea.form-control-lg {
 
 .nav-tabs {
   --bs-nav-tabs-border-width: 1px;
-  --bs-nav-tabs-border-color: #dee2e6;
+  --bs-nav-tabs-border-color: #0d6efd;
   --bs-nav-tabs-border-radius: 0.375rem;
-  --bs-nav-tabs-link-hover-border-color: #e9ecef #e9ecef #dee2e6;
-  --bs-nav-tabs-link-active-color: #495057;
+  --bs-nav-tabs-link-hover-border-color: #e9ecef #e9ecef #fff;
+  --bs-nav-tabs-link-active-color: #0d6efd;
   --bs-nav-tabs-link-active-bg: #fff;
-  --bs-nav-tabs-link-active-border-color: #dee2e6 #dee2e6 #fff;
+  --bs-nav-tabs-link-active-border-color: #0d6efd #0d6efd #fff;
   border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
 }
 .nav-tabs .nav-link {
+  color: var(--bs-dark);
   margin-bottom: calc(-1 * var(--bs-nav-tabs-border-width));
   background: none;
   border: var(--bs-nav-tabs-border-width) solid transparent;
@@ -3691,7 +3692,7 @@ textarea.form-control-lg {
 }
 .nav-pills .nav-link {
   background: none;
-  border: 0;
+  border: 1px solid var(--bs-blue);
   border-radius: var(--bs-nav-pills-border-radius);
 }
 .nav-pills .nav-link:disabled {
@@ -6006,6 +6007,11 @@ textarea.form-control-lg {
   vertical-align: var(--bs-spinner-vertical-align);
   border-radius: 50%;
   animation: var(--bs-spinner-animation-speed) linear infinite var(--bs-spinner-animation-name);
+  
+  /* spinner를 브라우저 가운데 위치하도록 추가 */
+  position: fixed;
+  top: 50%;
+  left: 50%;
 }
 
 @keyframes spinner-border {

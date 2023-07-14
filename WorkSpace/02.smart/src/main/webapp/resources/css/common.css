@@ -17,6 +17,11 @@ a.text-link:hover{
 	color: #ff8000; text-decoration: underline;
 }
 
+a.text-link{
+	text-decoration: none;
+	cursor: pointer;
+}
+
 textarea.form-control{
 	resize: none;
 	height: 400px;
@@ -87,4 +92,20 @@ input[type=file] {
 
 .file-preview img {
 	max-height: 38px;
+}
+
+.w-px300{
+	width: 300px;
+}
+
+.w-px250{
+	width: 300px;
+}
+
+.w-px200{
+	width: 300px;
+}
+
+.w-px150{
+	width: 300px;
 }
