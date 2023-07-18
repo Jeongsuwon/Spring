@@ -22,6 +22,13 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	//시각화 화면 요청
+	@RequestMapping("/visual/list")
+	public String list() {
+		
+		return "visual/list";
+	}
+	
 	@RequestMapping("/test1")
 	public String test1(String name, int price, Model model) {
 		model.addAttribute("name", name);
