@@ -4,8 +4,22 @@
 <mapper namespace="visual">
 
 <!-- 부서원수 상위 3위 년도별 사원수 조회 -->
-<select id="hirementTop3Year">
-
+<select id="hirementTop3Year" resultType="hashmap">
+<![CDATA[
+select *
+from(
+    select department_name, to_char(hire_date,'yyyy') unit
+    from employees e inner join
+                (select rank, department_id, '(TOP'|| rank || ')'|| department_name  department_name
+                from (select dense_rank() over(order by count(*) desc) rank, department_id, count(*) count
+                      from employees
+                      group by department_id) e left outer join departments d using(department_id)  
+                where rank <= 3) r using (department_id)
+    )
+pivot(count(*) for unit in('2001' "2001년", '2002' "2002년",'2003' "2003년",'2004' "2004년",'2005' "2005년",'2006' "2006년",'2007' "2007년",
+                            '2008' "2008년",'2023' "2023년" ))
+order by department_name
+]]>
 </select>
 
 <!-- 부서원수 상위 3위 월별 사원수 조회 -->
