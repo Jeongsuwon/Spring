@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="report">
+<sql id="searchWhere">
+<choose>
+<!-- 전체 -->
+	<when test="search == 'all'">
+		where title like '%' || #{keyword} || '%'
+			or content like '%' || #{keyword} || '%'
+			or writer like '%' || #{keyword} || '%'
+	</when>
+<!-- 제목, 내용 -->
+	<when test="search == 'title' or search == 'content'">
+		where ${search} like '%' || #{keyword} || '%'
+	</when>
+<!-- 작성자 -->
+	<when test="search == 'writer'">
+		where writer in (select userid from member where name like '%' || #{keyword} || '%')
+	</when>
+<!-- 제목+내용 -->
+	<when test="search == 't_c'">
+		where title like '%' || #{keyword} || '%'
+			or content like '%' || #{keyword} || '%'
+	</when>
+</choose>
+</sql>
+
+	<select id="list" resultType="smart.notice.NoticeVO">
+	select *
+	from (select row_number() over(order by root, step desc) no, n.*, name
+        from notice n inner join member m on n.writer = m.userid
+         <include refid="searchWhere"/>) n
+	where no between #{beginList} and #{endList}
+	order by no desc
+</select>
+
+</mapper>

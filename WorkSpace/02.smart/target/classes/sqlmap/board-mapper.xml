@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+<!-- 방명록 댓글삭제 -->
+<delete id="commentDelete">
+	delete from board_comment where id = #{id}
+</delete>
+
+<!-- 방명록 댓글변경저장 -->
+<update id="commentUpdate">
+	update board_comment set content = #{content} where id = #{id}
+</update>
+
+<!-- 방명록에 대한 댓글목록 -->
+<select id="commentList" resultType="smart.board.BoardCommentVO">
+	select c.*, m.profile, m.name
+	from board_comment c inner join member m on m.userid = c.writer
+	where board_id = #{board_id}
+	order by c.id desc
+</select>
+
+<!-- 방명록 댓글신규저장처리 -->
+<insert id="commentRegister">
+	insert into board_comment(content, writer, board_id)
+	values (#{content}, #{writer}, #{board_id})
+</insert>
+
+
+<!-- 방명록 글 변경 저장처리 -->
+<update id="update">
+	update board set title = #{title}, content = #{content}
+	where id = #{id}
+</update>
+
+<update id="read">
+	update board set readcnt = readcnt+1 where id = #{id}
+</update>
+
+<!-- 검색 조건 -->
+<sql id="searchWhere">
+	<choose>
+		<when test="search == 's1'"> <!-- 전체 -->
+			where title like '%' || #{keyword} || '%'
+			or content like '%' || #{keyword} || '%'
+			or writer in(select userid from member where name like '%' || #{keyword} || '%')
+		</when>
+		<when test="search == 's2'"> <!-- 제목 -->
+			where title like '%' || #{keyword} || '%'
+		</when>
+		<when test="search == 's3'"> <!-- 내용 -->
+			where content like '%' || #{keyword} || '%'
+		</when>
+		<when test="search == 's4'"> <!-- 작성자 -->
+			where writer in (select userid from member where name like '%' || #{keyword} || '%')
+		</when>
+		<when test="search == 's5'"> <!-- 제목 + 내용 -->
+			where title like '%' || #{keyword} || '%'
+			or content like '%' || #{keyword} || '%'
+		</when>
+	</choose>
+</sql>
+
+<!-- 선택한 방명록 글 삭제 -->
+<delete id="delete">
+delete from board where id = #{id}
+</delete>
+
+<!-- 선택한 방명록 글 조회 -->
+<select id="info" resultType="smart.board.BoardVO">
+	select b.*, name
+	from board b inner join member m on writer = userid
+	where id = #{id}
+</select>
+
+<!-- 삭제해야할 첨부파일 목록조회 -->
+<select id="fileRemoved" resultType="smart.board.FileVO">
+	select * from board_file where id in (${removed})
+</select>
+
+<!-- 선택한 방명록 글의 첨부파일 정보 조회 -->
+<select id="fileList" resultType="smart.board.FileVO">
+	select * from board_file where board_id = #{id}
+</select>
+
+<!-- 삭제해야할 첨부파일 삭제처리 -->
+<delete id="fileDelete">
+	delete from board_file where id = #{id}
+</delete>
+
+
+<!-- 선택한 첨부파일 조회 -->
+<select id="fileInfo" resultType="smart.board.FileVO">
+	select * from board_file where id = #{id}
+</select>
+
+<!-- 방명록 글 총 건수 조회 -->
+<select id="totalList" resultType="integer">
+select count(*) from board<include refid="searchWhere"/>
+</select>
+
+<select id="list" resultType="smart.board.BoardVO">
+select (select count(*) from board_file where b.id=board_id) filecnt,b.*
+from (select row_number() over(order by id) no, b.*, name
+        from board b inner join member m on b.writer = m.userid
+        <include refid="searchWhere"/>) b
+where no between #{beginList} and #{endList}       
+order by no desc
+</select>
+
+<!-- 방명록 글 정보 저장 -->
+<insert id="register">
+<selectKey order="AFTER" resultType="integer" keyProperty="id">
+	select seq_board.currval from dual
+</selectKey>
+
+insert into board(title, content, writer)
+values (#{title}, #{content}, #{writer})
+
+</insert>
+
+<!-- 방명록 첨부된 첨부파일 정보 저장 -->
+<insert id="fileRegister">
+	<foreach collection="fileList" item="file" open="insert all" separator="" close="select * from dual">  
+		into board_file (board_id, filename, filepath)
+ 		values (#{id}, #{file.filename}, #{file.filepath})
+	</foreach>
+</insert>
+</mapper>

@@ -44,8 +44,8 @@ select * from member where userid = #{userid}<!--  and userpw = #{userpw} -->
 
 <!-- 회원가입 테스트용 -->
 <insert id="joinTest">
-	insert into member( name, userid, userpw, email)
-	values (#{name}, #{userid}, #{userpw}, #{email})
+	insert into member( name, userid, userpw, email, admin)
+	values (#{name}, #{userid}, #{userpw}, #{email}, #{admin})
 </insert>
 
 </mapper>

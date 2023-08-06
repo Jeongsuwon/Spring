@@ -13,6 +13,7 @@
 	<c:when test="${category eq 'bo' }"><c:set var="title" value="방명록"/> </c:when>
 	<c:when test="${category eq 'da' }"><c:set var="title" value="공공데이터"/> </c:when>
 	<c:when test="${category eq 'vi' }"><c:set var="title" value="시각화"/> </c:when>
+	<c:when test="${category eq 're' }"><c:set var="title" value="복습"/> </c:when>
 
 </c:choose>
     <head>
@@ -55,6 +56,7 @@
                     <a class="${category eq 'bo' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/board/list'/>">방명록</a>
                     <a class="${category eq 'da' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/data/list'/>">공공데이터</a>
                     <a class="${category eq 'vi' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/visual/list'/>">시각화</a>
+                    <a class="${category eq 're' ? 'active':'' } list-group-item list-group-item-action list-group-item-light p-3" href="<c:url value='/report/list'/>">복습</a>
                     
                 </div>
             </div>
